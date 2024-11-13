@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Add User</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
+  </head>
+  <body>
+    <div class="container">
+        <h1 class="mt-5 mb-3">Add User</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <div class="container mt-3">
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" id="name" name="name" value="{{ form.name.data if form.name.data is not none else '' }}" required>
+                {% if form.name.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.name.errors[0] }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" id="email" name="email" value="{{ form.email.data if form.name.data is not none else '' }}" required>
+                {% if form.email.errors %}
+                    <div class="invalid-feedback">
+                        {{ form.email.errors[0] }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" class="form-control {% if form.phone.errors %}is-invalid{% endif %}" id="phone" name="phone" value="{{ form.phone.data if form.phone.data is not none else '' }}" required>
+                {% if form.phone.errors %}
+                    {% for error in form.phone.errors %}
+                    <div class="invalid-feedback">
+                      {{ error }}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-success">Add User</button>
+            <a href="{{ url_for('list_users') }}" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"></script>
+
+    <script>
+        // Initialize intl-tel-input
+        var input = document.querySelector("#phone");
+        var iti = window.intlTelInput(input, {
+            preferredCountries: ["bg", "us", "gb"],
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+        });
+
+        // Ensure the full number (including country code) is submitted
+        document.querySelector("form").addEventListener("submit", function() {
+            input.value = iti.getNumber();  // Set the full number in E.164 format
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+email_validator
+Flask
+flask_cors
+flask_marshmallow
+Flask-Migrate
+flask_sqlalchemy
+Flask-WTF
+marshmallow
+marshmallow-sqlalchemy
+phonenumbers
+psycopg2-binary
+requests
