@@ -45,24 +45,26 @@ This is a simple Flask-based user management application that allows users to vi
    DATABASE_URL=postgresql://username:password@localhost/dbname
    ```
 
-## Docker Setup 
+## Running the Application
+### Docker Setup 
 
 To run the application using Docker, follow these steps:
 
-1. **Build the Docker images**
+**Build and run the containers**
    ```sh
-   docker-compose build
-   ```
-
-2. **Run the containers**
-   ```sh
-   docker-compose up
+   dokcker-compose up --build
    ```
 
 This will spin up two containers: one for the Flask application and one for the PostgreSQL database.
 
-## Running the Application
 **Apply database migrations**
+   
+   In case you are making changes to existing **SQLAlchemy** (db models) you need to create and apply the database migration scripts. To do that follow the steps below:
+
+   - **Attach to the flask container**
+      ```sh
+      docker-compose exec web bash
+      ```
    - **Initialize migrations**
      ```sh
      flask db init
@@ -78,25 +80,25 @@ This will spin up two containers: one for the Flask application and one for the 
 
 ## Project Structure
 
-```
-user_list_app/
-├── app.py                # Main application file
-├── forms.py              # Form definitions with validation logic
-├── models.py             # Database models
-├── templates/            # HTML templates
-│   ├── add_user.html
-│   ├── update_user.html
-│   └── index.html
-├── static/               # Static files (CSS, JavaScript, images)
-│   └── images/
-│       └── avatars/
-│           └── default_avatar.png
-├── migrations/           # Database migration files
-├── Dockerfile            # Docker configuration for the Flask app
-├── docker-compose.yml    # Docker Compose file to set up multi-container environment
-├── requirements.txt      # Python dependencies
-└── README.md             # Project documentation
-```
+   ```
+   user_list_app/
+   ├── app.py                # Main application file
+   ├── forms.py              # Form definitions with validation logic
+   ├── models.py             # Database models
+   ├── templates/            # HTML templates
+   │   ├── add_user.html
+   │   ├── update_user.html
+   │   └── index.html
+   ├── static/               # Static files (CSS, JavaScript, images)
+   │   └── images/
+   │       └── avatars/
+   │           └── default_avatar.png
+   ├── migrations/           # Database migration files
+   ├── Dockerfile            # Docker configuration for the Flask app
+   ├── docker-compose.yml    # Docker Compose file to set up multi-container environment
+   ├── requirements.txt      # Python dependencies
+   └── README.md             # Project documentation
+   ```
 
 ## Usage Instructions
 
